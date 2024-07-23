@@ -33,13 +33,18 @@ echo "##############################################"
 #
 # Foreach Helm Chart, get the name and version.
 # If the composite tag does not exist, create a package with chart-releaser.
+CHARTS_PACKAGED=false
+
 for C_PATH in $CHART_PATHS; do
     VERSION=$(helm show chart "$C_PATH" 2>/dev/null | yq eval '.version' -)
     NAME=$(helm show chart "$C_PATH" 2>/dev/null | yq eval '.name' -)
     TAG="$NAME-$VERSION"
     if [ ! "$(git tag -l "$TAG")" ]; then
       cr package "$C_PATH"
+      CHARTS_PACKAGED=true
     else
       echo "Skipping $NAME-$VERSION.."
     fi
 done
+
+echo "CHARTS_PACKAGED=$CHARTS_PACKAGED" >> "$GITHUB_ENV"

@@ -55,10 +55,12 @@ runs:
 
     - id: release-charts
       name: Release Charts
+      if: env.CHARTS_PACKAGED == 'true'
       shell: bash
       run: release-charts.sh -r $GITHUB_REPOSITORY -t ${{ inputs.github_token }} -m ${{ inputs.mark_as_latest }} -g ${{ inputs.generate_release_notes }}
 
     - id: update-index
       name: Update Index
+      if: env.CHARTS_PACKAGED == 'true'
       shell: bash
       run: update-index.sh -r $GITHUB_REPOSITORY -t ${{ inputs.github_token }} -p ${{ inputs.pages_branch }}
