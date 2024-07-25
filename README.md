@@ -20,6 +20,17 @@ This action will find all directories and subdirectories containing a `Chart.yam
 - `mark_as_latest`: Will mark the created GitHub release as latest, optional, default `true`.
 - `pages_branch`: Name of the branch setup as Github pages branch to push the `index.yaml` file to.
 
+## Creating a Github Pages branch
+
+Run below `git` commands to create an orphan branch.
+Go to "Settings" in your repository, then "Pages", and set your Github Pages branch to `gh-pages`.
+
+```
+git switch --orphan gh-pages
+git commit --allow-empty -m "Initial commit"
+git push -u origin gh-pages
+```
+
 ## Example Workflow
 
 ```yaml
